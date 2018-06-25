@@ -161,10 +161,12 @@ def apply_attraction(nodes, edges, distributedAttraction, coefficient, edgeWeigh
     # Optimization, since usually edgeWeightInfluence is 0 or 1, and pow is slow
     if edgeWeightInfluence == 0:
         for edge in edges:
-            linAttraction(nodes[edge.node1], nodes[edge.node2], 1, distributedAttraction, coefficient, adjustSizes=adjustSizes)
+            linAttraction(nodes[edge.node1], nodes[edge.node2], 1, distributedAttraction, coefficient,
+                          adjustSizes=adjustSizes)
     elif edgeWeightInfluence == 1:
         for edge in edges:
-            linAttraction(nodes[edge.node1], nodes[edge.node2], edge.weight, distributedAttraction, coefficient, adjustSizes=adjustSizes)
+            linAttraction(nodes[edge.node1], nodes[edge.node2], edge.weight, distributedAttraction, coefficient,
+                          adjustSizes=adjustSizes)
     else:
         for edge in edges:
             linAttraction(nodes[edge.node1], nodes[edge.node2], pow(edge.weight, edgeWeightInfluence),
@@ -299,11 +301,7 @@ def adjustSpeedAndApplyForces(nodes, speed, speedEfficiency, jitterTolerance, ad
     minSpeedEfficiency = 0.05
 
     # Protective against erratic behavior
-<<<<<<< HEAD
     if totalEffectiveTraction and totalSwinging / totalEffectiveTraction > 2.0:
-=======
-    if totalEffectiveTraction != 0.0 and totalSwinging / totalEffectiveTraction > 2.0:
->>>>>>> Implements antiCollision (adjustSizes) and add stop condition
         if speedEfficiency > minSpeedEfficiency:
             speedEfficiency *= .5
         jt = max(jt, jitterTolerance)

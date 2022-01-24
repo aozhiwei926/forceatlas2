@@ -1,5 +1,6 @@
 from codecs import open
 from os import path
+import versioneer
 
 from setuptools import setup
 
@@ -26,12 +27,12 @@ except ImportError:
 
 if USE_CYTHON:
     ext_modules = [Extension('fa2.fa2util', ['fa2/fa2util.py', 'fa2/fa2util.pxd'], cython_directives={'language_level' : 3})]
-    cmdclass = {'build_ext': build_ext}
+    cmdclass = versioneer.get_cmdclass({'build_ext': build_ext})
     opts = {"ext_modules": ext_modules, "cmdclass": cmdclass}
 elif path.isfile(path.join(here, 'fa2/fa2util.c')):
     print("Yes\n")
     ext_modules = [Extension('fa2.fa2util', ['fa2/fa2util.c'])]
-    cmdclass = {}
+    cmdclass = versioneer.get_cmdclass()
     opts = {"ext_modules": ext_modules, "cmdclass": cmdclass}
 else:
     print("Pre-generated C files are not available. This library will be slow without Cython optimizations.\n")
@@ -44,7 +45,7 @@ print(">>>> Starting to install!\n")
 
 setup(
     name='fa2',
-    version='0.3.5',
+    version=versioneer.get_version(),
     description='The fastest ForceAtlas2 algorithm for Python (and NetworkX)',
     long_description_content_type='text/markdown',
     long_description=long_description,
